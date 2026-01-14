@@ -1,0 +1,56 @@
+## Dependency directories
+node_modules/
+bun.lockb
+
+# Build artifacts
+dist/
+dist-ssr/
+*.local
+
+# Public assets & binary files
+public/
+src/assets/fonts/
+src/assets/images/
+
+# Git and OS metadata
+.git/
+.DS_Store
+.vscode/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Build artifacts
+stats.html
+package-lock.json
+bun.lockb
+yarn.lock
+pnpm-lock.yaml
+
+# Test coverage
+coverage/
+
+# Public assets
+public/
+src/assets/fonts/
+
+# Git and OS metadata
+.git/
+.svn/
+.hg/
+.DS_Store
+
+# Environment files
+.env
+.env.*
