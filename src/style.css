@@ -30,7 +30,7 @@
     font-family: var(--font-sora);
     min-height: 100dvh;
     width: 100%;
-    @apply bg-neutral-950 antialiased;
+    @apply bg-neutral-900 antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -47,4 +47,28 @@
 }
 
 @layer components {
+  .btn {
+    @apply leading-none text-xl py-4 px-6 font-semibold rounded-xl tracking-normal focus:outline-2 outline-offset-2 transition-all cursor-pointer;
+
+    &.variant-select {
+      @apply text-base font-normal px-2.5 py-1.5 rounded-lg border text-neutral-0 border-neutral-500 outline-blue-400;
+
+      &.active,
+      &:hover {
+        @apply text-blue-400 border-blue-400;
+      }
+    }
+
+    &.variant-primary {
+      @apply text-neutral-0 bg-blue-600 hover:bg-blue-400 focus:outline-blue-400;
+    }
+
+    &.variant-secondary {
+      @apply text-neutral-900 bg-neutral-0 hover:opacity-90 focus:outline-blue-400;
+    }
+
+    &.variant-secondary-dark {
+      @apply p-4 text-neutral-0 bg-neutral-800 hover:opacity-90 focus:outline-blue-400;
+    }
+  }
 }
