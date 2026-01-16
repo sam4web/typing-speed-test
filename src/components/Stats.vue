@@ -37,12 +37,22 @@
       <div class="divider h-6" />
       <div class="flex-center space-x-3">
         <p class="text-neutral-400 text-xl">Accuracy:</p>
-        <b class="text-neutral-0 text-2xl font-bold">100%</b>
+        <b
+          class="text-2xl font-bold"
+          :class="started ? 'text-red-500' : 'text-neutral-0'"
+        >
+          100%
+        </b>
       </div>
       <div class="divider h-6" />
       <div class="flex-center space-x-3">
         <p class="text-neutral-400 text-xl">Time:</p>
-        <b class="text-neutral-0 text-2xl font-bold">0:60</b>
+        <b
+          class="text-2xl font-bold"
+          :class="started ? 'text-yellow-400' : 'text-neutral-0'"
+        >
+          0:60
+        </b>
       </div>
     </div>
 

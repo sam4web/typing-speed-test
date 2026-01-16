@@ -39,5 +39,9 @@ export const useTypingTestStore = defineStore('typingTest', () => {
     started.value = true;
   }
 
-  return { initStore, content, started, startTest, personalBest, options };
+  function endTest() {
+    started.value = false;
+  }
+
+  return { initStore, content, started, startTest, endTest, personalBest, options };
 });

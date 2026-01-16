@@ -12,6 +12,7 @@
     if (key === 'Backspace') {
       console.log('remove');
     }
+    console.log(key);
   }
 
   watch(started, (enabled) => {
@@ -48,8 +49,8 @@
     </div>
 
     <p
-      class="text-[40px] leading-[1.36] tracking-[0.4px]"
-      :class="started ? 'text-neutral-400' : 'text-neutral-0 opacity-45 blur-[6px] select-none'"
+      class="text-[40px] leading-[1.36] tracking-[0.4px] select-none"
+      :class="started ? 'text-neutral-400' : 'text-neutral-0 opacity-45 blur-[6px]'"
     >
       {{ content }}
     </p>
