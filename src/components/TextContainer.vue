@@ -1,11 +1,30 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { useTypingTestStore } from '@/stores/typingTest';
+  import { storeToRefs } from 'pinia';
+  import { onUnmounted, watch } from 'vue';
 
-  const started = ref(false);
-  function startTest() {
-    if (started.value) return;
-    started.value = true;
+  const store = useTypingTestStore();
+  const { startTest } = store;
+  const { started, content } = storeToRefs(store);
+
+  function handleKeyPress(e: KeyboardEvent) {
+    const key = e.key;
+    if (key === 'Backspace') {
+      console.log('remove');
+    }
   }
+
+  watch(started, (enabled) => {
+    if (enabled) {
+      document.addEventListener('keydown', handleKeyPress);
+    } else {
+      document.removeEventListener('keydown', handleKeyPress);
+    }
+  });
+
+  onUnmounted(() => {
+    document.removeEventListener('keydown', handleKeyPress);
+  });
 </script>
 
 <template>
@@ -32,10 +51,7 @@
       class="text-[40px] leading-[1.36] tracking-[0.4px]"
       :class="started ? 'text-neutral-400' : 'text-neutral-0 opacity-45 blur-[6px] select-none'"
     >
-      Coffee culture has evolved dramatically in recent decades. What was once a simple morning
-      ritual has become an art form, with baristas crafting intricate latte designs and roasters
-      sourcing beans from remote mountain villages. The humble cup of coffee now tells a global
-      story.
+      {{ content }}
     </p>
   </div>
 </template>

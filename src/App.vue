@@ -1,8 +1,10 @@
 <script setup lang="ts">
-  import Header from '@/components/Header.vue';
-  import Stats from '@/components/Stats.vue';
-  import TextContainer from '@/components/TextContainer.vue';
-  import Footer from '@/components/Footer.vue';
+  import { Header, Stats, TextContainer } from '@/components';
+  import { useTypingTestStore } from '@/stores/typingTest';
+  import { onMounted } from 'vue';
+
+  const { initStore } = useTypingTestStore();
+  onMounted(initStore);
 </script>
 
 <template>

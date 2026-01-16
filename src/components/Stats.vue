@@ -1,4 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useTypingTestStore, type IOptions } from '@/stores/typingTest';
+  import { storeToRefs } from 'pinia';
+
+  const store = useTypingTestStore();
+  const { options, started } = storeToRefs(store);
+
+  const difficultyOptions: { title: string; value: IOptions['difficulty'] }[] = [
+    { title: 'Easy', value: 'easy' },
+    { title: 'Medium', value: 'medium' },
+    { title: 'Hard', value: 'hard' },
+  ] as const;
+
+  const modeOptions: { title: string; value: IOptions['mode'] }[] = [
+    { title: 'Timed (60s)', value: 'timed' },
+    { title: 'Passage', value: 'passage' },
+  ] as const;
+
+  function setDifficultyOption(option: IOptions['difficulty']) {
+    if (started.value) return;
+    options.value.difficulty = option;
+  }
+
+  function setModeOption(option: IOptions['mode']) {
+    if (started.value) return;
+    options.value.mode = option;
+  }
+</script>
 
 <template>
   <div class="flex-between border-b border-neutral-700 pb-4">
@@ -23,17 +50,30 @@
       <div class="space-x-3.5 flex-center">
         <p class="text-base text-neutral-400">Difficulty:</p>
         <div class="space-x-1.5 flex-center">
-          <button class="btn variant-select">Easy</button>
-          <button class="btn variant-select">Medium</button>
-          <button class="btn variant-select active">Hard</button>
+          <button
+            v-for="option in difficultyOptions"
+            @click="setDifficultyOption(option.value)"
+            class="btn variant-select"
+            :class="{ active: options.difficulty === option.value }"
+            :disabled="started"
+          >
+            {{ option.title }}
+          </button>
         </div>
       </div>
       <div class="divider h-8" />
       <div class="space-x-3.5 flex-center">
         <p class="text-base text-neutral-400">Mode:</p>
         <div class="space-x-1.5 flex-center">
-          <button class="btn variant-select">Timed (60s)</button>
-          <button class="btn variant-select">Passage</button>
+          <button
+            v-for="option in modeOptions"
+            @click="setModeOption(option.value)"
+            class="btn variant-select"
+            :class="{ active: options.mode === option.value }"
+            :disabled="started"
+          >
+            {{ option.title }}
+          </button>
         </div>
       </div>
     </div>

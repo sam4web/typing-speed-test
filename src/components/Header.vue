@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useTypingTestStore } from '@/stores/typingTest';
+
+  const { personalBest } = useTypingTestStore();
+</script>
 
 <template>
   <header class="w-full">
@@ -14,7 +18,7 @@
           alt="personal-best-icon"
         />
         <p class="text-neutral-400 text-lg font-normal">
-          Personal best: <span class="text-neutral-0">92 WPM</span>
+          Personal best: <span class="text-neutral-0">{{ personalBest }} WPM</span>
         </p>
       </div>
     </div>
