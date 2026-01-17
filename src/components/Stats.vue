@@ -61,9 +61,10 @@
         <p class="text-base text-neutral-400">Difficulty:</p>
         <div class="space-x-1.5 flex-center">
           <button
+            class="btn variant-select"
             v-for="option in difficultyOptions"
             @click="setDifficultyOption(option.value)"
-            class="btn variant-select"
+            :key="option.value"
             :class="{ active: options.difficulty === option.value }"
             :disabled="started"
           >
@@ -76,9 +77,10 @@
         <p class="text-base text-neutral-400">Mode:</p>
         <div class="space-x-1.5 flex-center">
           <button
+            class="btn variant-select"
             v-for="option in modeOptions"
             @click="setModeOption(option.value)"
-            class="btn variant-select"
+            :key="option.value"
             :class="{ active: options.mode === option.value }"
             :disabled="started"
           >

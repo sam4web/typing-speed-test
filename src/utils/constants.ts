@@ -1,4 +1,4 @@
-import type { IContentBody } from '@/types/results';
+import type { IContentBody } from './types';
 
 export const RESULT_CONTENT = {
   COMPLETED: {

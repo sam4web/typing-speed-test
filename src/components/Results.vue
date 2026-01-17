@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { RESULT_CONTENT } from '@/constants/results';
+  import { RESULT_CONTENT } from '@/utils/constants';
   import type { TestResultType } from '@/types/results';
   import { computed } from 'vue';
 
@@ -16,21 +16,22 @@
   <template v-if="props.type === 'HIGH_SCORE'">
     <img
       src="@/assets/images/pattern-confetti.svg"
-      class="absolute w-full left-0 bottom-0 select-none"
+      class="absolute w-full left-0 bottom-0 select-none z-10"
     />
   </template>
 
   <template v-else>
     <img
       src="@/assets/images/pattern-star-1.svg"
-      class="absolute size-18.5 left-[87.22%] top-[53.2%] select-none"
+      class="absolute size-18.5 left-[87.22%] top-[53.2%] select-none z-10"
     />
     <img
       src="@/assets/images/pattern-star-2.svg"
-      class="absolute size-8 left-[7.57%] top-[24.51%] select-none"
+      class="absolute size-8 left-[7.57%] top-[24.51%] select-none z-10"
     />
   </template>
-  <div class="flex-center flex-col text-center space-y-8">
+
+  <div class="flex-center flex-col text-center space-y-8 z-50 relative">
     <div v-if="currentContent.type === 'HIGH_SCORE'">
       <img
         class="size-full block"

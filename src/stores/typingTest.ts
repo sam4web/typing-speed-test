@@ -11,7 +11,7 @@ export interface IOptions {
 export const useTypingTestStore = defineStore('typingTest', () => {
   const started = ref(false);
   const personalBest = ref(0);
-  const content = ref<string | null>(null);
+  const content = ref<string>('');
 
   const options = ref<IOptions>({
     difficulty: 'medium',

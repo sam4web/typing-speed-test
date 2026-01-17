@@ -1,4 +1,4 @@
-import type { RESULT_CONTENT } from '@/constants/results';
+import type { RESULT_CONTENT } from '@/utils/constants';
 
 export interface IContentBody {
   title: string;

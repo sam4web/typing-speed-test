@@ -1,21 +1,21 @@
 <script setup lang="ts">
-  import { Header, Stats, TextContainer, Footer, Results } from '@/components';
+  import { Footer, Header, Results, Stats, TextContainer } from '@/components';
   import { useTypingTestStore } from '@/stores/typingTest';
+  import type { TestResultType } from '@/utils/types';
   import { storeToRefs } from 'pinia';
   import { onMounted, ref } from 'vue';
-  import type { TestResultType } from './types/results';
 
   const store = useTypingTestStore();
   const { started } = storeToRefs(store);
   const { initStore } = store;
 
   onMounted(initStore);
-  const result = ref<TestResultType>('COMPLETED');
+  const result = ref<TestResultType>('HIGH_SCORE');
 </script>
 
 <template>
   <div class="w-full min-h-dvh relative">
-    <div class="max-w-7xl w-full mx-auto pt-8">
+    <div class="max-w-7xl w-full mx-auto py-8">
       <Header />
       <!-- <main class="mt-16">
         <Results :type="result" />
