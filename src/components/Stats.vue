@@ -1,9 +1,14 @@
 <script setup lang="ts">
   import { useTypingTestStore, type IOptions } from '@/stores/typingTest';
   import { storeToRefs } from 'pinia';
+  import { computed, onUnmounted } from 'vue';
 
   const store = useTypingTestStore();
-  const { options, started } = storeToRefs(store);
+  const { stopTimer } = store;
+  const { options, started, timer, isTimedMode, realTimeWPM, realTimeAccuracy, finalStats } =
+    storeToRefs(store);
+
+  const displayTime = computed(() => (started.value ? timer.value : finalStats.value.time));
 
   const difficultyOptions: { title: string; value: IOptions['difficulty'] }[] = [
     { title: 'Easy', value: 'easy' },
@@ -25,6 +30,8 @@
     if (started.value) return;
     options.value.mode = option;
   }
+
+  onUnmounted(() => stopTimer());
 </script>
 
 <template>
@@ -32,7 +39,9 @@
     <div class="flex-center space-x-6">
       <div class="flex-center space-x-3">
         <p class="text-neutral-400 text-xl">WPM:</p>
-        <b class="text-neutral-0 text-2xl font-bold">0</b>
+        <b class="text-neutral-0 text-2xl font-bold">
+          {{ started ? realTimeWPM : finalStats.wpm }}
+        </b>
       </div>
       <div class="divider h-6" />
       <div class="flex-center space-x-3">
@@ -41,7 +50,7 @@
           class="text-2xl font-bold"
           :class="started ? 'text-red-500' : 'text-neutral-0'"
         >
-          100%
+          {{ started ? realTimeAccuracy : finalStats.accuracy }}%
         </b>
       </div>
       <div class="divider h-6" />
@@ -49,9 +58,9 @@
         <p class="text-neutral-400 text-xl">Time:</p>
         <b
           class="text-2xl font-bold"
-          :class="started ? 'text-yellow-400' : 'text-neutral-0'"
+          :class="started && isTimedMode ? 'text-yellow-400' : 'text-neutral-0'"
         >
-          0:60
+          0:<template v-if="displayTime < 10">0</template>{{ displayTime }}
         </b>
       </div>
     </div>

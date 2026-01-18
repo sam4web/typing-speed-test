@@ -3,13 +3,11 @@
   import { useTypingTestStore } from '@/stores/typingTest';
   import type { TestResultType } from '@/utils/types';
   import { storeToRefs } from 'pinia';
-  import { onMounted, ref } from 'vue';
+  import { ref } from 'vue';
 
   const store = useTypingTestStore();
-  const { started } = storeToRefs(store);
-  const { initStore } = store;
+  const { started, isFinished } = storeToRefs(store);
 
-  onMounted(initStore);
   const result = ref<TestResultType>('HIGH_SCORE');
 </script>
 
@@ -17,10 +15,16 @@
   <div class="w-full min-h-dvh relative">
     <div class="max-w-7xl w-full mx-auto py-8">
       <Header />
-      <!-- <main class="mt-16">
+      <main
+        v-if="isFinished"
+        class="mt-16"
+      >
         <Results :type="result" />
-      </main> -->
-      <main class="mt-16 space-y-8">
+      </main>
+      <main
+        v-else
+        class="mt-16 space-y-8"
+      >
         <Stats />
         <TextContainer />
         <Footer v-if="started" />

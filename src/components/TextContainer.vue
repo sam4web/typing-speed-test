@@ -1,14 +1,11 @@
 <script setup lang="ts">
   import { useTypingTestStore } from '@/stores/typingTest';
   import { storeToRefs } from 'pinia';
-  import { computed, onUnmounted, ref, watch } from 'vue';
+  import { computed, onUnmounted, watch } from 'vue';
 
   const store = useTypingTestStore();
-  const { startTest, endTest, options } = store;
-  const { started, content } = storeToRefs(store);
-
-  const typedResults = ref<Record<number, 'correct' | 'incorrect'>>({});
-  const currentPos = ref(0);
+  const { startTest, endTest } = store;
+  const { started, content, typedResults, currentPos } = storeToRefs(store);
 
   const charList = computed(() => {
     return content.value.split('').map((char, index) => ({
