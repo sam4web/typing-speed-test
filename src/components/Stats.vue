@@ -1,14 +1,16 @@
 <script setup lang="ts">
-  import { useTypingTestStore, type IOptions } from '@/stores/typingTest';
+  import { useTypingTestStore } from '@/stores/typingTest';
+  import { initialStatsState } from '@/utils/constants';
+  import type { IOptions } from '@/utils/types';
   import { storeToRefs } from 'pinia';
   import { computed, onUnmounted } from 'vue';
 
   const store = useTypingTestStore();
   const { stopTimer } = store;
-  const { options, started, timer, isTimedMode, realTimeWPM, realTimeAccuracy, finalStats } =
+  const { options, started, timer, isTimedMode, realTimeWPM, realTimeAccuracy } =
     storeToRefs(store);
 
-  const displayTime = computed(() => (started.value ? timer.value : finalStats.value.time));
+  const displayTime = computed(() => (started.value ? timer.value : initialStatsState.time));
 
   const difficultyOptions: { title: string; value: IOptions['difficulty'] }[] = [
     { title: 'Easy', value: 'easy' },
@@ -40,7 +42,7 @@
       <div class="flex-center space-x-3">
         <p class="text-neutral-400 text-xl">WPM:</p>
         <b class="text-neutral-0 text-2xl font-bold">
-          {{ started ? realTimeWPM : finalStats.wpm }}
+          {{ started ? realTimeWPM : initialStatsState.wpm }}
         </b>
       </div>
       <div class="divider h-6" />
@@ -50,7 +52,7 @@
           class="text-2xl font-bold"
           :class="started ? 'text-red-500' : 'text-neutral-0'"
         >
-          {{ started ? realTimeAccuracy : finalStats.accuracy }}%
+          {{ started ? realTimeAccuracy : initialStatsState.accuracy }}%
         </b>
       </div>
       <div class="divider h-6" />

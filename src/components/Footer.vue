@@ -1,12 +1,12 @@
 <script setup lang="ts">
   import { useTypingTestStore } from '@/stores/typingTest';
-  const { endTest } = useTypingTestStore();
+  const { restartTest } = useTypingTestStore();
 </script>
 
 <template>
   <footer class="pt-8 border-t border-neutral-700 flex-center">
     <button
-      @click="endTest"
+      @click="restartTest"
       class="flex-center btn variant-secondary-dark gap-2.5"
     >
       Restart Test

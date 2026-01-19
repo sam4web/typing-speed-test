@@ -1,14 +1,10 @@
 <script setup lang="ts">
-  import { Footer, Header, Results, Stats, TextContainer } from '@/components';
+  import { Footer, Header, Stats, TypingArea, TypingResults } from '@/components';
   import { useTypingTestStore } from '@/stores/typingTest';
-  import type { TestResultType } from '@/utils/types';
   import { storeToRefs } from 'pinia';
-  import { ref } from 'vue';
 
   const store = useTypingTestStore();
-  const { started, isFinished } = storeToRefs(store);
-
-  const result = ref<TestResultType>('HIGH_SCORE');
+  const { started, isFinished, result } = storeToRefs(store);
 </script>
 
 <template>
@@ -16,17 +12,17 @@
     <div class="max-w-7xl w-full mx-auto py-8">
       <Header />
       <main
-        v-if="isFinished"
+        v-if="isFinished && result"
         class="mt-16"
       >
-        <Results :type="result" />
+        <TypingResults :result="result" />
       </main>
       <main
         v-else
         class="mt-16 space-y-8"
       >
         <Stats />
-        <TextContainer />
+        <TypingArea />
         <Footer v-if="started" />
       </main>
     </div>

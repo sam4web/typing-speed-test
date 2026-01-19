@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { useTypingTestStore } from '@/stores/typingTest';
+  import { storeToRefs } from 'pinia';
 
-  const { personalBest } = useTypingTestStore();
+  const store = useTypingTestStore();
+  const { personalBest } = storeToRefs(store);
 </script>
 
 <template>

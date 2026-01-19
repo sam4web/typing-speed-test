@@ -1,19 +1,23 @@
 <script setup lang="ts">
+  import { useTypingTestStore } from '@/stores/typingTest';
   import { RESULT_CONTENT } from '@/utils/constants';
-  import type { TestResultType } from '@/types/results';
+  import type { IResult } from '@/utils/types';
   import { computed } from 'vue';
 
-  const props = defineProps<{ type?: TestResultType }>();
+  const { restartTest } = useTypingTestStore();
+
+  const props = defineProps<{
+    result: IResult;
+  }>();
 
   const currentContent = computed(() => {
-    const isValidKey = !!props.type && props.type in RESULT_CONTENT;
-    const type = isValidKey ? props.type : 'COMPLETED';
+    const type = props.result.type in RESULT_CONTENT ? props.result.type : 'COMPLETED';
     return { type, ...RESULT_CONTENT[type] };
   });
 </script>
 
 <template>
-  <template v-if="props.type === 'HIGH_SCORE'">
+  <template v-if="props.result.type === 'HIGH_SCORE'">
     <img
       src="@/assets/images/pattern-confetti.svg"
       class="absolute w-full left-0 bottom-0 select-none z-10"
@@ -65,28 +69,31 @@
     <div class="flex pt-5 pb-8 gap-5 text-left">
       <div class="min-w-40 w-full border-neutral-700 border px-6 py-4 rounded-xl space-y-3">
         <h3 class="text-neutral-400 font-normal text-xl leading-[1.2] tracking-[-0.6px]">WPM</h3>
-        <p class="text-neutral-0 text-2xl font-bold">85</p>
+        <p class="text-neutral-0 text-2xl font-bold">{{ result.wpm }}</p>
       </div>
       <div class="min-w-40 w-full border-neutral-700 border px-6 py-4 rounded-xl space-y-3">
         <h3 class="text-neutral-400 font-normal text-xl leading-[1.2] tracking-[-0.6px]">
           Accuracy
         </h3>
-        <p class="text-red-500 text-2xl font-bold">90%</p>
+        <p class="text-red-500 text-2xl font-bold">{{ result.accuracy }}%</p>
       </div>
       <div class="min-w-40 w-full border-neutral-700 border px-6 py-4 rounded-xl space-y-3">
         <h3 class="text-neutral-400 font-normal text-xl leading-[1.2] tracking-[-0.6px]">
           Characters
         </h3>
         <p class="text-2xl font-bold">
-          <span class="text-green-500">120</span>
+          <span class="text-green-500">{{ result.characterCount.correct }}</span>
           <span class="text-neutral-500">/</span>
-          <span class="text-red-500">5</span>
+          <span class="text-red-500">{{ result.characterCount.incorrect }}</span>
         </p>
       </div>
     </div>
 
-    <button class="flex-center btn variant-secondary gap-2.5">
-      <template v-if="props.type === 'COMPLETED'"> Go Again </template>
+    <button
+      @click="restartTest"
+      class="flex-center btn variant-secondary gap-2.5"
+    >
+      <template v-if="props.result.type === 'COMPLETED'"> Go Again </template>
       <template v-else> Best This Score </template>
       <img
         class="size-5"

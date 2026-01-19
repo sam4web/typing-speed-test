@@ -14,3 +14,9 @@ export const RESULT_CONTENT = {
     description: 'You’re getting faster. That was incredible typing.',
   },
 } as const satisfies Record<string, IContentBody>;
+
+export const initialStatsState = {
+  wpm: 0,
+  accuracy: 100,
+  time: 60,
+};

@@ -1,24 +1,9 @@
 import data from '@/assets/data.json';
+import { initialStatsState } from '@/utils/constants';
 import { getRandomElement } from '@/utils/helpers';
+import type { IOptions, IResult } from '@/utils/types';
 import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
-
-export interface IOptions {
-  difficulty: 'easy' | 'medium' | 'hard';
-  mode: 'timed' | 'passage';
-}
-
-export interface IStats {
-  wpm: number;
-  accuracy: number;
-  time: number;
-}
-
-const initialStatsState = {
-  wpm: 0,
-  accuracy: 100,
-  time: 60,
-};
 
 export const useTypingTestStore = defineStore('typingTest', () => {
   // --- State ---
@@ -32,7 +17,8 @@ export const useTypingTestStore = defineStore('typingTest', () => {
   const currentPos = ref(0);
 
   const typedResults = ref<Record<number, 'correct' | 'incorrect'>>({});
-  const finalStats = ref<IStats>({ ...initialStatsState });
+
+  const result = ref<IResult | null>(null);
 
   const options = ref<IOptions>({
     difficulty: 'medium',
@@ -51,14 +37,18 @@ export const useTypingTestStore = defineStore('typingTest', () => {
   });
 
   const realTimeWPM = computed(() => {
-    if (isFinished.value) return finalStats.value.wpm;
+    if (isFinished.value) {
+      return result.value ? result.value.wpm : 0;
+    }
     if (!startTime.value || currentCounts.value.total === 0) return 0;
     const elapsedMinutes = (Date.now() - startTime.value) / 1000 / 60;
     return Math.round(currentCounts.value.total / 5 / Math.max(elapsedMinutes, 0.01));
   });
 
   const realTimeAccuracy = computed(() => {
-    if (isFinished.value) return finalStats.value.accuracy;
+    if (isFinished.value) {
+      return result.value ? result.value.accuracy : 100;
+    }
     if (currentCounts.value.total === 0) return 100;
     return Math.round((currentCounts.value.correct / currentCounts.value.total) * 100);
   });
@@ -68,29 +58,56 @@ export const useTypingTestStore = defineStore('typingTest', () => {
     content.value = getRandomElement(data[options.value.difficulty])?.text || '';
   }
 
-  function startTest() {
-    if (started.value) return;
+  function resetState() {
+    stopTimer();
+    started.value = false;
     isFinished.value = false;
+    result.value = null;
     currentPos.value = 0;
     typedResults.value = {};
-    timer.value = 60;
+    startTime.value = null;
+    timer.value = initialStatsState.time;
+  }
+
+  function startTest() {
+    if (started.value) return;
+    resetState();
     started.value = true;
     startTime.value = Date.now();
   }
 
   function endTest() {
+    const finalWpm = realTimeWPM.value;
+    const finalAccuracy = realTimeAccuracy.value;
+    const { correct, total } = currentCounts.value;
+
+    let type: IResult['type'] = 'COMPLETED';
+    if (personalBest.value === 0) type = 'FIRST_TEST';
+    else if (finalWpm > personalBest.value) type = 'HIGH_SCORE';
+
+    if (type !== 'COMPLETED') {
+      personalBest.value = finalWpm;
+      localStorage.setItem('personalBest', finalWpm.toString());
+    }
+
+    result.value = {
+      type,
+      wpm: finalWpm,
+      accuracy: finalAccuracy,
+      characterCount: {
+        correct: correct,
+        incorrect: total - correct,
+      },
+    };
+
     isFinished.value = true;
     started.value = false;
-    finalStats.value = {
-      wpm: realTimeWPM.value,
-      accuracy: realTimeAccuracy.value,
-      time: isTimedMode.value ? 60 - timer.value : 0,
-    };
-    if (finalStats.value.wpm > personalBest.value) {
-      personalBest.value = finalStats.value.wpm;
-      localStorage.setItem('personalBest', personalBest.value.toString());
-    }
     stopTimer();
+  }
+
+  function restartTest() {
+    resetState();
+    setNewContent();
   }
 
   // --- Timer Logic ---
@@ -115,13 +132,17 @@ export const useTypingTestStore = defineStore('typingTest', () => {
   watch(
     () => options.value.difficulty,
     () => {
-      if (!started.value) setNewContent();
+      if (!started.value) {
+        setNewContent();
+      }
     },
     { immediate: true },
   );
 
   watch(started, (val) => {
-    if (val && isTimedMode.value) startTimer();
+    if (val && isTimedMode.value) {
+      startTimer();
+    }
   });
 
   return {
@@ -135,11 +156,12 @@ export const useTypingTestStore = defineStore('typingTest', () => {
     typedResults,
     realTimeWPM,
     realTimeAccuracy,
-    finalStats,
     startTest,
     endTest,
     isTimedMode,
     stopTimer,
     setNewContent,
+    result,
+    restartTest,
   };
 });
