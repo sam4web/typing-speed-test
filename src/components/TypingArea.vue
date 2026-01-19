@@ -25,6 +25,8 @@
       }
       return;
     }
+
+    if (e.repeat) return;
     const isCorrect = e.key === content.value[currentPos.value];
     typedResults.value[currentPos.value] = isCorrect ? 'correct' : 'incorrect';
     if (currentPos.value < content.value.length) {
@@ -46,9 +48,7 @@
     }
   });
 
-  onUnmounted(() => {
-    document.removeEventListener('keydown', handleKeyPress);
-  });
+  onUnmounted(() => document.removeEventListener('keydown', handleKeyPress));
 </script>
 
 <template>
