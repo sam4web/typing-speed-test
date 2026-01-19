@@ -13,13 +13,13 @@
       <Header />
       <main
         v-if="isFinished && result"
-        class="mt-16"
+        class="mt-8 lg:mt-16"
       >
         <TypingResults :result="result" />
       </main>
       <main
         v-else
-        class="mt-16 space-y-8"
+        class="mt-8 lg:mt-16 space-y-8"
       >
         <Stats />
         <TypingArea />

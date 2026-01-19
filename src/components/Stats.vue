@@ -4,6 +4,7 @@
   import type { IOptions } from '@/utils/types';
   import { storeToRefs } from 'pinia';
   import { computed, onUnmounted } from 'vue';
+  import { Dropdown } from '.';
 
   const store = useTypingTestStore();
   const { stopTimer } = store;
@@ -103,7 +104,20 @@
       </div>
     </div>
 
-    <!-- DROPDOWN HERE --->
+    <div class="flex sm:hidden justify-center items-center space-x-2.5 max-w-xs mx-auto w-full">
+      <Dropdown
+        :disabled="started"
+        :options="difficultyOptions"
+        :active="options.difficulty"
+        @click="setDifficultyOption"
+      />
+      <Dropdown
+        :disabled="started"
+        :options="modeOptions"
+        :active="options.mode"
+        @click="setModeOption"
+      />
+    </div>
   </div>
 </template>
 
