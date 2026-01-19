@@ -20,25 +20,25 @@
   <template v-if="props.result.type === 'HIGH_SCORE'">
     <img
       src="@/assets/images/pattern-confetti.svg"
-      class="absolute w-full left-0 bottom-0 select-none z-10"
+      class="fixed w-full left-0 bottom-0 select-none z-10"
     />
   </template>
 
   <template v-else>
     <img
       src="@/assets/images/pattern-star-1.svg"
-      class="absolute size-18.5 left-[87.22%] top-[53.2%] select-none z-10"
+      class="fixed size-9 md:size-18.5 left-[87.22%] top-[73.2%] select-none z-10"
     />
     <img
       src="@/assets/images/pattern-star-2.svg"
-      class="absolute size-8 left-[7.57%] top-[24.51%] select-none z-10"
+      class="fixed size-5 md:size-8 left-[7.57%] top-[24.51%] select-none z-10"
     />
   </template>
 
-  <div class="flex-center flex-col text-center space-y-8 z-50 relative">
+  <div class="flex-center flex-col text-center space-y-6 md:space-y-8 z-50 relative">
     <div v-if="currentContent.type === 'HIGH_SCORE'">
       <img
-        class="size-full block"
+        class="size-14 md:size-full rounded-full block"
         src="@/assets/images/icon-new-pb.svg"
         alt="high score smashed icon"
       />
@@ -50,7 +50,7 @@
       <img
         src="@/assets/images/icon-completed.svg"
         alt="test completed icon"
-        class="rounded-full size-full block"
+        class="rounded-full block size-14 md:size-full"
       />
     </div>
 
@@ -58,15 +58,15 @@
       class="space-y-2.5"
       :class="{ 'pt-6': currentContent.type !== 'HIGH_SCORE' }"
     >
-      <h2 class="text-neutral-0 text-[40px] font-bold leading-[1.36] tracking-[0.4px]">
+      <h2 class="text-neutral-0 text-2xl md:text-[40px] font-bold leading-[1.36] tracking-[0.4px]">
         {{ currentContent.title }}
       </h2>
-      <p class="text-neutral-400 font-normal text-xl leading-[1.2] tracking-[-0.6px]">
+      <p class="text-neutral-400 font-normal text-base md:text-xl leading-[1.2] tracking-[-0.6px]">
         {{ currentContent.description }}
       </p>
     </div>
 
-    <div class="flex pt-5 pb-8 gap-5 text-left">
+    <div class="flex flex-col sm:flex-row pt-5 sm:pb-8 gap-5 text-left w-full sm:w-auto">
       <div class="min-w-40 w-full border-neutral-700 border px-6 py-4 rounded-xl space-y-3">
         <h3 class="text-neutral-400 font-normal text-xl leading-[1.2] tracking-[-0.6px]">WPM</h3>
         <p class="text-neutral-0 text-2xl font-bold">{{ result.wpm }}</p>

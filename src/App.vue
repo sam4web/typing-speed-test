@@ -8,8 +8,8 @@
 </script>
 
 <template>
-  <div class="w-full min-h-dvh relative">
-    <div class="max-w-7xl w-full mx-auto py-8">
+  <div class="min-h-dvh">
+    <div class="max-w-7xl w-full mx-auto p-4 lg:p-8">
       <Header />
       <main
         v-if="isFinished && result"

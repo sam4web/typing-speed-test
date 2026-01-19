@@ -37,17 +37,19 @@
 </script>
 
 <template>
-  <div class="flex-between border-b border-neutral-700 pb-4">
-    <div class="flex-center space-x-6">
-      <div class="flex-center space-x-3">
-        <p class="text-neutral-400 text-xl">WPM:</p>
+  <div
+    class="flex justify-between items-start lg:items-center flex-col lg:flex-row border-b border-neutral-700 gap-4 pb-4"
+  >
+    <div class="flex-center space-x-6 w-full sm:w-auto lg:space-x-4 xl:space-x-6">
+      <div class="flex-center flex-col sm:flex-row space-x-3">
+        <p class="text-neutral-400 text-base md:text-xl">WPM:</p>
         <b class="text-neutral-0 text-2xl font-bold">
           {{ started ? realTimeWPM : initialStatsState.wpm }}
         </b>
       </div>
       <div class="divider h-6" />
-      <div class="flex-center space-x-3">
-        <p class="text-neutral-400 text-xl">Accuracy:</p>
+      <div class="flex-center flex-col sm:flex-row space-x-3">
+        <p class="text-neutral-400 text-base md:text-xl">Accuracy:</p>
         <b
           class="text-2xl font-bold"
           :class="started ? 'text-red-500' : 'text-neutral-0'"
@@ -56,8 +58,8 @@
         </b>
       </div>
       <div class="divider h-6" />
-      <div class="flex-center space-x-3">
-        <p class="text-neutral-400 text-xl">Time:</p>
+      <div class="flex-center flex-col sm:flex-row space-x-3">
+        <p class="text-neutral-400 text-base md:text-xl">Time:</p>
         <b
           class="text-2xl font-bold"
           :class="started && isTimedMode ? 'text-yellow-400' : 'text-neutral-0'"
@@ -67,7 +69,7 @@
       </div>
     </div>
 
-    <div class="flex-center space-x-4">
+    <div class="hidden sm:flex justify-center items-center space-x-4 lg:space-x-2 xl:space-x-4">
       <div class="space-x-3.5 flex-center">
         <p class="text-base text-neutral-400">Difficulty:</p>
         <div class="space-x-1.5 flex-center">
@@ -100,6 +102,8 @@
         </div>
       </div>
     </div>
+
+    <!-- DROPDOWN HERE --->
   </div>
 </template>
 

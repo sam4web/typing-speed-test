@@ -58,21 +58,25 @@
   >
     <div
       v-if="!started"
-      class="absolute top-1/2 left-1/2 -translate-1/2 z-5"
+      class="absolute size-full flex-center top-1/2 left-1/2 -translate-1/2 z-5"
     >
-      <div class="flex-center flex-col space-y-5">
+      <div class="flex-center flex-col space-y-3 md:space-y-5">
         <button
           @click="startTest"
           class="btn variant-primary"
         >
           Start Typing Test
         </button>
-        <p class="text-xl font-semibold text-neutral-0">Or click the text and start typing</p>
+        <p class="text-xl text-center font-semibold text-neutral-0">
+          Or click the text and
+          <br class="inline-block sm:hidden" />
+          start typing
+        </p>
       </div>
     </div>
 
     <p
-      class="text-[40px] leading-[1.36] tracking-[0.4px] select-none"
+      class="text-[32px] lg:text-[40px] leading-[1.36] tracking-[0.4px] select-none"
       :class="started ? 'text-neutral-400' : 'text-neutral-0 opacity-45 blur-[6px]'"
     >
       <span
