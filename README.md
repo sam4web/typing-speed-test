@@ -28,7 +28,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Frontend Mentor Solution]()
+- Solution URL: [Frontend Mentor Solution](https://www.frontendmentor.io/solutions/typing-speed-test-XsXfXyaA4a)
 - Live Site URL: [Github Pages](https://sam4web.github.io/typing-speed-test/)
 
 ## Built with

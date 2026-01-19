@@ -4,5 +4,6 @@ import Stats from './Stats.vue';
 import TypingArea from './TypingArea.vue';
 import TypingResults from './TypingResults.vue';
 import Dropdown from './Dropdown.vue';
+import Attribution from './Attribution.vue';
 
-export { Header, Footer, Stats, TypingArea, TypingResults, Dropdown };
+export { Header, Footer, Stats, TypingArea, TypingResults, Dropdown, Attribution };
