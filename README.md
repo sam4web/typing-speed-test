@@ -10,7 +10,6 @@ This is a solution to the [Typing Speed Test challenge on Frontend Mentor](https
   - [Links](#links)
 - [Built with](#built-with)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 
 ## Overview
